@@ -1,0 +1,43 @@
+<resources>
+
+    <style name="Widget.Theme.CookSample.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.CookSample.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/app_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_hello</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.CookSample</item>
+    </style>
+
+    <style name="TextStyle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="TitleStyle" parent="TextStyle"/>
+
+    <style name="DescriptionStyle" parent="TextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/description_text_size</item>
+    </style>
+
+    <style name="ItemTitleStyle" parent="TitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_title</item>
+    </style>
+
+    <style name="ItemDescriptionStyle" parent="DescriptionStyle">
+        <item name="android:background">@drawable/bg_description</item>
+    </style>
+</resources>

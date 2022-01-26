@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_collections">
+
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="com.alex.cooksample.ui.collections.CollectionFragment"
+        android:label="@string/title_collections"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_collection_to_details"
+            app:destination="@id/navigation_collection_details"
+            app:popUpTo="@id/navigation_collections"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_collection_details"
+        android:name="com.alex.cooksample.ui.collections.detail.CollectionDetailFragment"
+        android:label="@string/title_details"
+        tools:layout="@layout/fragment_collection_detail">
+        <action
+            android:id="@+id/action_collection_to_recipe"
+            app:destination="@id/navigation_recipe_details"
+            app:popUpTo="@id/navigation_collection_details"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_recipes"
+        android:name="com.alex.cooksample.ui.recipes.RecipesFragment"
+        android:label="@string/title_recipes"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_recipes_to_details"
+            app:destination="@id/navigation_recipe_details"
+            app:popUpTo="@id/navigation_recipes"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_recipe_details"
+        android:name="com.alex.cooksample.ui.recipes.detail.RecipeDetailFragment"
+        android:label="@string/title_recipe"
+        tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.alex.cooksample.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

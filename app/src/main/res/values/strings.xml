@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CookSample</string>
+    <string name="date_recipe_details">dd.MM.yyyy</string>
+    <string name="title_collections">Collections</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_recipe">Recipe</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_details">Enjoy local food</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="recipes_label">Recipes</string>
+    <string name="poster">Poster</string>
+    <string name="click_me">Click Me!</string>
+    <string name="greeting">Hello, Cook Pad!\nI hope, you like my app!</string>
+    <string name="steps_label">Steps</string>
+    <string name="ingredients_label">Ingredients</string>
+</resources>
