@@ -1,7 +1,7 @@
 # Cook Test App
 ## The app was written to show the people how I'm writing the code
 
-All provided APIs are used in the offer. The main functionality consists of a block of collections of:
+All provided APIs are used in the offer. The main functionality consists of:
 - collections
 - recipes
 - profile
