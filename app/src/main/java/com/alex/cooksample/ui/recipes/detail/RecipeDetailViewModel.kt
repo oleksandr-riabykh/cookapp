@@ -1,7 +1,6 @@
 package com.alex.cooksample.ui.recipes.detail
 
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex.cooksample.data.repository.RecipesRepository
 import com.alex.cooksample.extensions.toRecipeUIModel

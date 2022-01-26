@@ -28,6 +28,7 @@
                 android:layout_height="@dimen/poster_height"
                 android:background="@color/orange_light_transparent"
                 android:binding_urls="@{model.previews}"
+                android:contentDescription="@string/poster"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

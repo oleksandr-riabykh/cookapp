@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/orange_light"
         app:cardCornerRadius="@dimen/card_radius"
         app:cardUseCompatPadding="true">
 
@@ -33,7 +34,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:contentDescription="@string/poster" />
 
             <TextView
                 android:id="@+id/descriptionView"

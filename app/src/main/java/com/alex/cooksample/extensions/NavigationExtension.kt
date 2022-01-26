@@ -22,7 +22,3 @@ fun Fragment.navigateTo(
 
     findNavController().navigate(to, bundle, options.build())
 }
-
-fun Fragment.navigateBack() {
-    findNavController().navigateUp()
-}

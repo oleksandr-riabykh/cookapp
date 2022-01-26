@@ -1,6 +1,5 @@
 package com.alex.cooksample.ui.models
 
-import com.alex.cooksample.data.models.Step
 import com.alex.cooksample.data.models.User
 
 class RecipeUIModel(

@@ -14,9 +14,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
         android:elevation="@dimen/card_elevation"
-        app:cardCornerRadius="@dimen/card_radius">
+        app:cardBackgroundColor="@color/orange_light"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,6 +29,7 @@
                 android:layout_height="@dimen/poster_height"
                 android:background="@color/orange_light_transparent"
                 android:binding_url="@{model.imageUrl}"
+                android:contentDescription="@string/poster"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
