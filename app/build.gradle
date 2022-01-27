@@ -113,4 +113,6 @@ dependencies {
     androidTestImplementation "androidx.test:core:1.4.1-alpha03"
     androidTestImplementation "androidx.test:core-ktx:1.4.0"
     androidTestImplementation group: 'androidx.test', name: 'core', version: '1.4.0'
+    androidTestImplementation('androidx.test:runner:1.4.0')
+    androidTestImplementation('androidx.test:rules:1.4.0')
 }
