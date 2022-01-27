@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface CookService {
     @GET(ENDPOINT_COLLECTIONS)
-    suspend fun getCollection(): List<CookCollection>
+    suspend fun getCollections(): List<CookCollection>
 
     @GET(ENDPOINT_COLLECTION_RECIPES)
     suspend fun getRecipesByCollectionId(@Path("id") id: Int): List<Recipe>

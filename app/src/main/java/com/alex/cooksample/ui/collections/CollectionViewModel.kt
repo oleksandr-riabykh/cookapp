@@ -19,7 +19,7 @@ class CollectionViewModel @Inject constructor(
         loadCollections()
     }
 
-    private fun loadCollections() {
+    fun loadCollections() {
         viewModelScope.launch {
             try {
                 val data = collectionRepository.getCollections()

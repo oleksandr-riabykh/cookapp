@@ -18,7 +18,7 @@ class CollectionsRepository @Inject constructor(
     suspend fun getCollections(): List<CookCollection> = withContext(Dispatchers.IO) {
         val localData = getLocalCollections()
         return@withContext if (localData?.isNullOrEmpty() == true) {
-            val collection = cookService.getCollection()
+            val collection = cookService.getCollections()
             collectionDao.saveAll(collection.map { it.toCollectionEntity() })
             collection
         } else {
@@ -28,6 +28,6 @@ class CollectionsRepository @Inject constructor(
 
     suspend fun getCollectionById(id: Int): CookCollection = cookService.getCollectionById(id)
 
-    private suspend fun getLocalCollections() =
+    private fun getLocalCollections() =
         collectionDao.getAll()?.map { it.toCollectionModel() }
 }
