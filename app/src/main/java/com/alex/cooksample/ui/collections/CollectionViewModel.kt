@@ -29,8 +29,4 @@ class CollectionViewModel @Inject constructor(
             }
         }
     }
-
-    fun clickCollection(itemId: Int? = 0) {
-        itemId?.let { state.postValue(CollectionState.OnClick(it)) }
-    }
 }

@@ -21,7 +21,12 @@ class RecipesFragment : Fragment() {
 
     private val binding get() = _binding
     private val recipesAdapter = RecipesAdapter { id ->
-        viewModel.clickRecipe(id)
+        navigateTo(
+            R.id.navigation_recipe_details,
+            R.id.navigation_recipes,
+            bundle = Bundle().apply {
+                putInt(RecipeDetailFragment.ARG_RECIPE_ID, id)
+            })
     }
 
     override fun onCreateView(
@@ -43,14 +48,6 @@ class RecipesFragment : Fragment() {
                 is RecipesState.OnLoadCompleted -> {
                     recipesAdapter.setData(state.data)
                     binding?.progress?.hide()
-                }
-                is RecipesState.OnClick -> {
-                    navigateTo(
-                        R.id.navigation_recipe_details,
-                        R.id.navigation_recipes,
-                        bundle = Bundle().apply {
-                            putInt(RecipeDetailFragment.ARG_RECIPE_ID, state.itemId)
-                        })
                 }
                 is RecipesState.OnError -> {
                     binding?.progress?.hide()

@@ -1,6 +1,5 @@
 package com.alex.cooksample.data.repository
 
-import com.alex.cooksample.BaseTest
 import com.alex.cooksample.data.network.CookService
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -9,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class RecipesRepositoryTest: BaseTest() {
+class RecipesRepositoryTest {
     private val networkService: CookService = mockk(relaxed = true)
 
     private lateinit var recipesRepo: RecipesRepository
