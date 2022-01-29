@@ -2,7 +2,7 @@ package com.alex.cooksample.data.models
 
 import com.google.gson.annotations.SerializedName
 
-class User(
+data class User(
     @SerializedName("name")
     var name: String?,
 

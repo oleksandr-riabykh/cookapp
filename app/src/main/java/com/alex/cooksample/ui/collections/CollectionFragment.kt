@@ -21,7 +21,12 @@ class CollectionFragment : Fragment() {
 
     private val binding get() = _binding
     private val collectionAdapter = CollectionAdapter { collection ->
-        viewModel.clickCollection(collection.id)
+        navigateTo(
+            R.id.navigation_collection_details,
+            R.id.navigation_collections,
+            bundle = Bundle().apply {
+                collection.id?.let { putInt(CollectionDetailFragment.ARG_COLLECTION_ID, it) }
+            })
     }
 
     override fun onCreateView(
@@ -42,18 +47,15 @@ class CollectionFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is CollectionState.OnLoadCompleted -> collectionAdapter.setData(state.data)
-                is CollectionState.OnClick -> navigateTo(
-                    R.id.navigation_collection_details,
-                    R.id.navigation_collections,
-                    bundle = Bundle().apply {
-                        putInt(CollectionDetailFragment.ARG_COLLECTION_ID, state.itemId)
-                    })
                 is CollectionState.OnError -> Toast.makeText(
                     requireContext(),
                     state.error.message,
                     Toast.LENGTH_SHORT
                 ).show() // handle errors
             }
+        })
+        viewModel.showLoadingIndicator.observe(viewLifecycleOwner, { showIndicator ->
+            if (showIndicator) binding?.progress?.show() else binding?.progress?.hide()
         })
     }
 

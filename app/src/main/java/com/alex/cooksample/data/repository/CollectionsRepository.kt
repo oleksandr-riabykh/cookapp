@@ -14,7 +14,10 @@ class CollectionsRepository @Inject constructor(
     private val collectionDao: CollectionDao,
     private val cookService: CookService
 ) {
-    //sync made just in simple way. The logic might be improved
+    /**
+    The sync was done just in simple way. The logic might be improved.
+    For example to load local collections, make Network Call -> refresh local data and UI
+    */
     suspend fun getCollections(): List<CookCollection> = withContext(Dispatchers.IO) {
         val localData = getLocalCollections()
         return@withContext if (localData?.isNullOrEmpty() == true) {

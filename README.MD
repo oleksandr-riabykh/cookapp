@@ -39,6 +39,8 @@ The things I would like to improve in the future
 - UI for landscape orientation
 - Handle dates in the network layer
 - Improve tests(make real ones) and increase test coverage
+- Improve Sync caching logic for collections and add it for recipes. Add offline mode
+- Error handling
 
 ## License
 

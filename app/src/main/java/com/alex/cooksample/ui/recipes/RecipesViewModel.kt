@@ -33,9 +33,4 @@ class RecipesViewModel @Inject constructor(
             }
         }
     }
-
-    // we might use it i case we adding any statistic or analytics
-    fun clickRecipe(itemId: Int? = 0) {
-        itemId?.let { state.postValue(RecipesState.OnClick(it)) }
-    }
 }

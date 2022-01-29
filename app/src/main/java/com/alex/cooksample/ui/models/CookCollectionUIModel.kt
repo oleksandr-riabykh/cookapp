@@ -1,7 +1,7 @@
 package com.alex.cooksample.ui.models
 
 
-class CookCollectionUIModel(
+data class CookCollectionUIModel(
     var id: Int?,
     var title: String?,
     var description: String?,

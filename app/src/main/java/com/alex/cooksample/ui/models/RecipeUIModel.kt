@@ -2,7 +2,7 @@ package com.alex.cooksample.ui.models
 
 import com.alex.cooksample.data.models.User
 
-class RecipeUIModel(
+data class RecipeUIModel(
     var id: Int?,
     var title: String?,
     var story: String?,

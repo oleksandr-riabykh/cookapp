@@ -2,7 +2,7 @@ package com.alex.cooksample.data.models
 
 import com.google.gson.annotations.SerializedName
 
-class Recipe(
+data class Recipe(
     @SerializedName("id")
     var id: Int?,
 

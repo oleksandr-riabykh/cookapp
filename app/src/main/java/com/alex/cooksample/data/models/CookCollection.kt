@@ -2,7 +2,7 @@ package com.alex.cooksample.data.models
 
 import com.google.gson.annotations.SerializedName
 
-class CookCollection(
+data class CookCollection(
     @SerializedName("id")
     var id: Int?,
 
