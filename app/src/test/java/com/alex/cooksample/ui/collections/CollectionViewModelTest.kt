@@ -5,8 +5,13 @@ import com.alex.cooksample.data.repository.CollectionsRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -14,28 +19,25 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 class CollectionViewModelTest {
 
     @get:Rule
     val testRule: TestRule = InstantTaskExecutorRule()
-
-    @ObsoleteCoroutinesApi
+    private val testDispatcher = TestCoroutineDispatcher()
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     private val collectionRepository: CollectionsRepository = mockk(relaxed = true)
-
     private lateinit var collectionViewModel: CollectionViewModel
 
-    @ObsoleteCoroutinesApi
-    @ExperimentalCoroutinesApi
+
     @Before
     fun setupTest() {
         Dispatchers.setMain(mainThreadSurrogate)
         collectionViewModel = CollectionViewModel(collectionRepository)
     }
 
-    @ObsoleteCoroutinesApi
-    @ExperimentalCoroutinesApi
     @After
     fun tearDown() {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
@@ -43,15 +45,18 @@ class CollectionViewModelTest {
     }
 
     @Test
-    fun `If view model getCollections calls repository's method`() = runBlocking {
-        //given
-        coEvery { collectionRepository.getCollections() } returns mockk(relaxed = true)
+    fun `If view model getCollections calls repository's method`() {
+        testDispatcher.runBlockingTest {
+            //given
+            coEvery { collectionRepository.getCollections() } returns mockk(relaxed = true)
 
-        //when
-        collectionViewModel.loadCollections()
+            //when
+            collectionViewModel.loadCollections()
 
-        //then
-        coVerify { collectionRepository.getCollections() }
+            //then
+            coVerify { collectionRepository.getCollections() }
+        }
+        testDispatcher.cleanupTestCoroutines()
     }
 
 }

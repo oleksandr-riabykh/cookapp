@@ -5,6 +5,7 @@ import com.alex.cooksample.data.models.CookCollection
 import com.alex.cooksample.data.network.CookService
 import com.alex.cooksample.extensions.toCollectionEntity
 import com.alex.cooksample.extensions.toCollectionModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,13 +13,14 @@ import javax.inject.Inject
 
 class CollectionsRepository @Inject constructor(
     private val collectionDao: CollectionDao,
-    private val cookService: CookService
+    private val cookService: CookService,
+    private val defaultDispatcher: CoroutineDispatcher
 ) {
     /**
     The sync was done just in simple way. The logic might be improved.
     For example to load local collections, make Network Call -> refresh local data and UI
     */
-    suspend fun getCollections(): List<CookCollection> = withContext(Dispatchers.IO) {
+    suspend fun getCollections(): List<CookCollection> = withContext(defaultDispatcher) {
         val localData = getLocalCollections()
         return@withContext if (localData?.isNullOrEmpty() == true) {
             val collection = cookService.getCollections()

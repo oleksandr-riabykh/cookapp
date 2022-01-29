@@ -25,7 +25,12 @@ class CollectionDetailFragment : Fragment() {
 
     private val binding get() = _binding
     private val recipesAdapter = RecipesAdapter { id ->
-        viewModel.clickRecipe(id)
+        navigateTo(
+            R.id.navigation_recipe_details,
+            R.id.navigation_collection_details,
+            bundle = Bundle().apply {
+                putInt(RecipeDetailFragment.ARG_RECIPE_ID, id)
+            })
     }
 
     override fun onCreateView(
@@ -50,12 +55,6 @@ class CollectionDetailFragment : Fragment() {
             when (state) {
                 is CollectionDetailState.OnLoadRecipesCompleted -> recipesAdapter.setData(state.data)
                 is CollectionDetailState.OnLoadCollectionCompleted -> displayData(state.data)
-                is CollectionDetailState.OnRecipeClick -> navigateTo(
-                    R.id.navigation_recipe_details,
-                    R.id.navigation_collection_details,
-                    bundle = Bundle().apply {
-                        putInt(RecipeDetailFragment.ARG_RECIPE_ID, state.itemId)
-                    })
                 is CollectionDetailState.OnError -> Toast.makeText(
                     requireContext(),
                     state.error.message,

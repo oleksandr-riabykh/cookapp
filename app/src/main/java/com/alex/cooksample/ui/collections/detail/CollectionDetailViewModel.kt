@@ -31,10 +31,6 @@ class CollectionDetailViewModel @Inject constructor(
         }
     }
 
-    fun clickRecipe(itemId: Int? = 0) {
-        itemId?.let { state.postValue(CollectionDetailState.OnRecipeClick(it)) }
-    }
-
     private suspend fun loadRecipes(id: Int) {
         val data = recipeRepository.getRecipesByCollectionId(id)
         state.postValue(CollectionDetailState.OnLoadRecipesCompleted(data.map { it.toRecipeUIModel() }))
