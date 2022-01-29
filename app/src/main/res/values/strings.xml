@@ -10,7 +10,7 @@
     <string name="recipes_label">Recipes</string>
     <string name="poster">Poster</string>
     <string name="click_me">Click Me!</string>
-    <string name="greeting">Hello, Cook Pad!\nI hope, you like my app!</string>
+    <string name="greeting">Hello, People!\nI hope, you like my app!</string>
     <string name="steps_label">Steps</string>
     <string name="ingredients_label">Ingredients</string>
 </resources>

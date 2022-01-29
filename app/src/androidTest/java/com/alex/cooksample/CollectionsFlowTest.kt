@@ -38,9 +38,4 @@ class CollectionsFlowTest {
             .onChildView(withId(R.id.collectionTitleTextView))
             .check(doesNotExist())
     }
-
-    @Test
-    fun navigateToRecipesPositive() {
-
-    }
 }

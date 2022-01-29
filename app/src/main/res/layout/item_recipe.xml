@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="model"
             type="com.alex.cooksample.ui.models.RecipeUIModel" />
@@ -55,6 +57,7 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{model.story}"
+                android:visibility="@{model.story == null || model.story.isEmpty() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

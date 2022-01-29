@@ -42,7 +42,7 @@ class CollectionRepositoryTest {
     }
 
     @Test
-    fun `If no cached collections then get response from server`() {
+    fun `If get collections calls get all in the CollectionDao`() {
         testDispatcher.runBlockingTest {
             //given
             coEvery { collectionDao.getAll() } returns listOf()
@@ -52,13 +52,13 @@ class CollectionRepositoryTest {
             collectionRepo.getCollections()
 
             //then
-            coVerify { networkService.getCollections() }
+            coVerify { collectionDao.getAll() }
         }
         testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
-    fun `If collections then get collection by id from server is not empty`() {
+    fun `If getCollectionById calls method CookService getCollectionById`() {
         testDispatcher.runBlockingTest {
             val collectionId = 2
 

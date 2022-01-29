@@ -5,6 +5,7 @@
     android:layout_marginBottom="@dimen/items_margin">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="model"
@@ -26,6 +27,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/poster_height"
+                android:transitionName="imageView"
                 android:background="@color/orange_light_transparent"
                 android:binding_urls="@{model.previews}"
                 android:contentDescription="@string/poster"
@@ -54,6 +56,7 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{model.description}"
+                android:visibility="@{model.description == null || model.description.isEmpty() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

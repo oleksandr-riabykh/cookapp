@@ -17,6 +17,6 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
 
-    <color name="app_background">@color/orange_light</color>
+    <color name="app_background">@color/white</color>
     <color name="app_bottom_bar">#F1E3CE</color>
 </resources>

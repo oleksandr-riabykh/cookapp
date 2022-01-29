@@ -9,7 +9,7 @@ import com.alex.cooksample.R
 fun Fragment.navigateTo(
     to: Int,
     popTo: Int? = null,
-    inclusive: Boolean = false,
+    inclusive: Boolean = true,
     bundle: Bundle? = null
 ) {
     val options = NavOptions.Builder()

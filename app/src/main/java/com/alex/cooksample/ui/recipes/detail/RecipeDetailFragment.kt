@@ -29,28 +29,41 @@ class RecipeDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
         val root: View? = binding?.root
-        arguments?.getInt(ARG_RECIPE_ID)
-            ?.let { detailViewModel.loadRecipe(it) }
 
         binding?.stepsRecycler?.isNestedScrollingEnabled = false
         setupListeners()
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadData()
+    }
+
     private fun setupListeners() {
-        detailViewModel.state.observe(viewLifecycleOwner, { state ->
+        detailViewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is RecipeDetailState.OnLoadCompleted -> updateViews(state.data)
                 is RecipeDetailState.OnError -> Toast.makeText(
                     requireContext(),
                     state.error.message,
                     Toast.LENGTH_SHORT
-                ).show() // handle errors
+                ).show()
             }
-        })
+        }
+        detailViewModel.showLoadingIndicator.observe(viewLifecycleOwner) { showIndicator ->
+            binding?.swipeRefreshLayout?.isRefreshing = showIndicator
+        }
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            loadData()
+        }
+    }
+
+    private fun loadData() {
+        arguments?.getInt(ARG_RECIPE_ID)
+            ?.let { detailViewModel.loadRecipe(it) }
     }
 
     private fun updateViews(data: RecipeUIModel) {
@@ -58,8 +71,8 @@ class RecipeDetailFragment : Fragment() {
             Picasso.get().load(data.imageUrl)
                 .into(binding?.posterImageView)
         } else {
-            binding?.posterImageView?.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            binding?.posterImageView?.setImageResource(R.drawable.ic_baseline_no_photography_24)
+            binding?.posterImageView?.scaleType = ImageView.ScaleType.CENTER_CROP
+            binding?.posterImageView?.setImageResource(R.drawable.ic_menu_place_holder)
         }
         binding?.titleTextView?.text = data.title
         binding?.ingridientsTextView?.text = data.ingredients?.joinToString(
@@ -68,7 +81,10 @@ class RecipeDetailFragment : Fragment() {
             separator = "\n* "
         )
         binding?.descriptionTextView?.text = data.story
-        binding?.dateTextView?.text = data.publishedAt.dateFormat(DATE_SERVER_INPUT_FORMAT,getString(R.string.date_recipe_details))
+        binding?.dateTextView?.text = data.publishedAt.dateFormat(
+            DATE_SERVER_INPUT_FORMAT,
+            getString(R.string.date_recipe_details)
+        )
         binding?.stepsRecycler?.adapter = StepsAdapter(data.steps ?: listOf())
         data.user?.photo?.let {
             if (it.isNotEmpty()) {
@@ -77,7 +93,6 @@ class RecipeDetailFragment : Fragment() {
                     .into(binding?.userAvatarImage)
             }
         }
-
     }
 
     override fun onDestroyView() {

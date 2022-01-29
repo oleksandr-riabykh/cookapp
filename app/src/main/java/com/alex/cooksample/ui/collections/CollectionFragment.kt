@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.alex.cooksample.R
 import com.alex.cooksample.databinding.FragmentListBinding
 import com.alex.cooksample.extensions.navigateTo
-import com.alex.cooksample.ui.collections.detail.CollectionDetailFragment
+import com.alex.cooksample.ui.collections.details.CollectionDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +22,7 @@ class CollectionFragment : Fragment() {
     private val binding get() = _binding
     private val collectionAdapter = CollectionAdapter { collection ->
         navigateTo(
-            R.id.navigation_collection_details,
-            R.id.navigation_collections,
+            R.id.action_collection_to_details,
             bundle = Bundle().apply {
                 collection.id?.let { putInt(CollectionDetailFragment.ARG_COLLECTION_ID, it) }
             })
@@ -44,7 +43,7 @@ class CollectionFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        viewModel.state.observe(viewLifecycleOwner, { state ->
+        viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is CollectionState.OnLoadCompleted -> collectionAdapter.setData(state.data)
                 is CollectionState.OnError -> Toast.makeText(
@@ -53,10 +52,13 @@ class CollectionFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show() // handle errors
             }
-        })
-        viewModel.showLoadingIndicator.observe(viewLifecycleOwner, { showIndicator ->
-            if (showIndicator) binding?.progress?.show() else binding?.progress?.hide()
-        })
+        }
+        viewModel.showLoadingIndicator.observe(viewLifecycleOwner) { showIndicator ->
+           binding?.swipeRefreshLayout?.isRefreshing  = showIndicator
+        }
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            viewModel.loadCollections()
+        }
     }
 
     override fun onDestroyView() {

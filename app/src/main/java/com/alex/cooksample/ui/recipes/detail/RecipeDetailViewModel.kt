@@ -18,12 +18,15 @@ class RecipeDetailViewModel @Inject constructor(
     val state = SingleLiveEvent<RecipeDetailState>()
 
     fun loadRecipe(id: Int) {
+        showLoadingIndicator.postValue(true)
         viewModelScope.launch {
             try {
                 val data = recipeRepository.getRecipeById(id)
                 state.postValue(RecipeDetailState.OnLoadCompleted(data.toRecipeUIModel()))
             } catch (e: Exception) {
                 state.postValue(RecipeDetailState.OnError(e))
+            }finally {
+                showLoadingIndicator.postValue(false)
             }
         }
     }

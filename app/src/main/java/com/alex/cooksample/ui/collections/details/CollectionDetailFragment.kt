@@ -1,20 +1,17 @@
-package com.alex.cooksample.ui.collections.detail
+package com.alex.cooksample.ui.collections.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alex.cooksample.R
 import com.alex.cooksample.databinding.FragmentCollectionDetailBinding
 import com.alex.cooksample.extensions.navigateTo
-import com.alex.cooksample.ui.models.CookCollectionUIModel
 import com.alex.cooksample.ui.recipes.RecipesAdapter
 import com.alex.cooksample.ui.recipes.detail.RecipeDetailFragment
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,8 +23,7 @@ class CollectionDetailFragment : Fragment() {
     private val binding get() = _binding
     private val recipesAdapter = RecipesAdapter { id ->
         navigateTo(
-            R.id.navigation_recipe_details,
-            R.id.navigation_collection_details,
+            R.id.action_collection_to_recipe,
             bundle = Bundle().apply {
                 putInt(RecipeDetailFragment.ARG_RECIPE_ID, id)
             })
@@ -42,40 +38,44 @@ class CollectionDetailFragment : Fragment() {
         _binding = FragmentCollectionDetailBinding.inflate(inflater, container, false)
         val root: View? = binding?.root
 
-        arguments?.getInt(ARG_COLLECTION_ID)?.let { viewModel.loadCollection(it) }
-
         binding?.recipesRecycler?.isNestedScrollingEnabled = false
         binding?.recipesRecycler?.adapter = recipesAdapter
         setupListeners()
         return root
     }
 
-    private fun setupListeners() {
-        viewModel.state.observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is CollectionDetailState.OnLoadRecipesCompleted -> recipesAdapter.setData(state.data)
-                is CollectionDetailState.OnLoadCollectionCompleted -> displayData(state.data)
-                is CollectionDetailState.OnError -> Toast.makeText(
-                    requireContext(),
-                    state.error.message,
-                    Toast.LENGTH_SHORT
-                ).show() // handle errors
-            }
-        })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadData()
     }
 
-    //todo: make it better and avoid duplication
-    private fun displayData(collection: CookCollectionUIModel) {
-        val previews = collection.previews
-        if (previews.isNotEmpty()) {
-            Picasso.get().load(previews.first())
-                .into(binding?.posterImageView)
-        } else {
-            binding?.posterImageView?.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            binding?.posterImageView?.setImageResource(R.drawable.ic_baseline_no_photography_24)
+    private fun setupListeners() {
+        viewModel.collectionUIModel.observe(viewLifecycleOwner) { collection ->
+            binding?.model = collection
         }
-        binding?.titleTextView?.text = collection.title
-        binding?.descriptionTextView?.text = collection.description
+        viewModel.recipesUIModel.observe(viewLifecycleOwner) { recipes ->
+            recipesAdapter.setData(recipes)
+        }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(
+                requireContext(),
+                error.localizedMessage ?: error.message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        viewModel.showLoadingIndicator.observe(viewLifecycleOwner) { showIndicator ->
+            binding?.swipeRefreshLayout?.isRefreshing = showIndicator
+        }
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            loadData()
+        }
+    }
+
+    private fun loadData() {
+        arguments?.getInt(ARG_COLLECTION_ID)?.let {
+            viewModel.loadCollection(it)
+            viewModel.loadRecipes(it)
+        }
     }
 
     override fun onDestroyView() {

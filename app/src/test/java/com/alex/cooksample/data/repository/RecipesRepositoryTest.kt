@@ -24,7 +24,7 @@ class RecipesRepositoryTest {
     }
 
     @Test
-    fun `If recipes then get response from server`() {
+    fun `If getRecipes then get response from server`() {
         testDispatcher.runBlockingTest {
             //given
             coEvery { networkService.getRecipes() } returns mockk(relaxed = true)
@@ -40,7 +40,7 @@ class RecipesRepositoryTest {
 
 
     @Test
-    fun `If recipes by collection id then get response from server`() {
+    fun `If getRecipesByCollectionId then get response from server`() {
         testDispatcher.runBlockingTest {
             val collectionId = 2
 
@@ -58,7 +58,7 @@ class RecipesRepositoryTest {
     }
 
     @Test
-    fun `If recipes by id then get response from server`() {
+    fun `If getRecipeById get response from server`() {
         testDispatcher.runBlockingTest {
             val recipeId = 2
 

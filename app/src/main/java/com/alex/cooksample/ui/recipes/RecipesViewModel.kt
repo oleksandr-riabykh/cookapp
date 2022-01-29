@@ -16,11 +16,7 @@ class RecipesViewModel @Inject constructor(
 
     val state = SingleLiveEvent<RecipesState>()
 
-    init {
-        loadRecipes()
-    }
-
-    private fun loadRecipes() {
+    fun loadRecipes() {
         showLoadingIndicator.postValue(true)
         viewModelScope.launch {
             try {

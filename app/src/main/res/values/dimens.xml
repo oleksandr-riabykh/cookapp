@@ -14,4 +14,6 @@
     <dimen name="card_elevation">6dp</dimen>
     <dimen name="items_margin">4dp</dimen>
     <dimen name="item_title_margin">8dp</dimen>
+    <dimen name="recipe_avatar_size">64dp</dimen>
+    <dimen name="recipe_avatar_radius">50dp</dimen>
 </resources>

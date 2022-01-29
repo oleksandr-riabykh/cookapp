@@ -38,6 +38,15 @@ android {
     dataBinding {
         enabled = true
     }
+
+    /**
+     * Had issue with database testing
+     * kotlinx-coroutines-test
+     */
+    packagingOptions {
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+    }
 }
 
 ext {
@@ -55,10 +64,11 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.6.0-alpha02'
     implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //exp splash
     implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
@@ -73,11 +83,6 @@ dependencies {
     // HiltViewModel
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
-
-    // HiltViewModel
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alp'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0'
-
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
@@ -108,6 +113,8 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.test:core:1.4.1-alpha03"
@@ -115,4 +122,6 @@ dependencies {
     androidTestImplementation group: 'androidx.test', name: 'core', version: '1.4.0'
     androidTestImplementation('androidx.test:runner:1.4.0')
     androidTestImplementation('androidx.test:rules:1.4.0')
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0'
+
 }

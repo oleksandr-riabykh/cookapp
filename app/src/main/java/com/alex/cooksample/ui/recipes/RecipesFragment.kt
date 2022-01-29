@@ -22,8 +22,7 @@ class RecipesFragment : Fragment() {
     private val binding get() = _binding
     private val recipesAdapter = RecipesAdapter { id ->
         navigateTo(
-            R.id.navigation_recipe_details,
-            R.id.navigation_recipes,
+            R.id.action_recipes_to_details,
             bundle = Bundle().apply {
                 putInt(RecipeDetailFragment.ARG_RECIPE_ID, id)
             })
@@ -41,15 +40,18 @@ class RecipesFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadRecipes()
+    }
+
     private fun setupListeners() {
-        viewModel.state.observe(viewLifecycleOwner, { state ->
+        viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is RecipesState.OnLoadCompleted -> {
                     recipesAdapter.setData(state.data)
-                    binding?.progress?.hide()
                 }
                 is RecipesState.OnError -> {
-                    binding?.progress?.hide()
                     Toast.makeText(
                         requireContext(),
                         state.error.message,
@@ -57,10 +59,13 @@ class RecipesFragment : Fragment() {
                     ).show()
                 } // handle errors
             }
-        })
-        viewModel.showLoadingIndicator.observe(viewLifecycleOwner, { showIndicator ->
-            if (showIndicator) binding?.progress?.show() else binding?.progress?.hide()
-        })
+        }
+        viewModel.showLoadingIndicator.observe(viewLifecycleOwner) { showIndicator ->
+            binding?.swipeRefreshLayout?.isRefreshing  = showIndicator
+        }
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            viewModel.loadRecipes()
+        }
     }
 
     override fun onDestroyView() {
